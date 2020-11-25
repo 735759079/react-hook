@@ -1,6 +1,7 @@
+const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const webpack = require("webpack");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const ROOT_PATH = path.resolve(__dirname);
 const BUILD_PATH = path.resolve(ROOT_PATH, "build");
@@ -16,12 +17,23 @@ module.exports = {
         filename: "[name].bundle.js",
         path: BUILD_PATH,
     },
+    resolve: {
+        extensions: [".js", ".jsx"],
+    },
     module: {
         rules: [
             {
-                test: /\.js?$/,
+                test: /(\.jsx|\.js)$/,
                 loader: "babel-loader",
                 include: APP_PATH,
+            },
+            {
+                test: /\.css$/,
+                use: [MiniCssExtractPlugin.loader, "css-loader"],
+            },
+            {
+                test: /\.scss$/,
+                use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
             },
         ],
     },
@@ -32,5 +44,6 @@ module.exports = {
             template: "./public/index.html",
             inject: "body",
         }),
+        new MiniCssExtractPlugin({ filename: "css/index.css" }),
     ],
 };

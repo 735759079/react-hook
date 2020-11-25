@@ -1,14 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
-class App extends React.PureComponent {
-    render() {
-        return (
-            <>
-                <div>react片段</div>
-            </>
-        );
-    }
-}
+import App from "./App";
 
 ReactDOM.render(<App />, document.getElementById("root"));
